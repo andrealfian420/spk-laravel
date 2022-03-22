@@ -21,14 +21,6 @@ class TourismObjectPolicy
   }
 
   /**
-   * Determine whether the user can view the model.
-   *
-   * @param  \App\Models\User  $user
-   * @param  \App\Models\TourismObject  $tourismObject
-   * @return \Illuminate\Auth\Access\Response|bool
-   */
-
-  /**
    * Determine whether the user can create models.
    *
    * @param  \App\Models\User  $user

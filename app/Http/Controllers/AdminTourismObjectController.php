@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class AdminTourismObjectController extends Controller
 {
-  public function index(Request $request)
+  public function index()
   {
     $this->authorize('viewAny', TourismObject::class);
 
-    echo 'halo';
+    return view('dashboard.tourism-object.index', [
+      'title' => 'Tourism Objects',
+      'objects' => TourismObject::all()
+    ]);
   }
 }

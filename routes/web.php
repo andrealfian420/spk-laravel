@@ -32,4 +32,6 @@ Route::get('/dashboard', function () {
 Route::get('dashboard/profile', [DashboardProfileController::class, 'index'])->middleware('auth');
 Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'update'])->middleware('auth');
 
-Route::get('dashboard/tourism-objects', [AdminTourismObjectController::class, 'index'])->middleware('auth');
+Route::resource('dashboard/tourism-objects', AdminTourismObjectController::class)
+  ->except('show')
+  ->middleware('auth');

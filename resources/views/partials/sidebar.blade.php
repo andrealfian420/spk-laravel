@@ -17,5 +17,23 @@
         </a>
       </li>
     </ul>
+
+    @can('admin')
+      <hr>
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-muted">
+        <span>Administrator</span>
+      </h6>
+
+      <ul class="nav flex-column">
+        @can('viewAny', App\Models\TourismObject::class)
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('dashboard/tourism-objects*') ? 'active' : '' }}" href="/dashboard/tourism-objects">
+              <span data-feather="camera"></span>
+              Tourism Objects
+            </a>
+          </li>
+        @endcan
+      </ul>
+    @endcan
   </div>
 </nav>
