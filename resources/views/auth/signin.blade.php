@@ -5,11 +5,11 @@
     <img class="mb-4" src="/assets/img/palmtree-silhouette.svg" alt="Palm Tree" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Sign In</h1>
 
-    <form action="/signin" method="POST">
+    <form action="/" method="POST">
       @csrf
 
       <div class="form-floating">
-        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="name@example.com" value="{{ old('username') }}" autocomplete="off" autofocus required>
+        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="name@example.com" autocomplete="off" autofocus required>
         <label for="username">Username</label>
 
         @error('username')
