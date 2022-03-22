@@ -29,3 +29,4 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::get('dashboard/profile', [DashboardProfileController::class, 'index'])->middleware('auth');
+Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'update'])->middleware('auth');
