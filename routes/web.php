@@ -19,4 +19,8 @@ Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
 Route::get('/signup', [AuthController::class, 'signUp'])->middleware('guest');
 Route::post('/signup', [AuthController::class, 'store'])->middleware('guest');
 
-Route::get('/dashboard', fn () =>  'oke')->middleware('auth');
+Route::get('/dashboard', function () {
+  return view('dashboard.index', [
+    'title' => 'Dashboard'
+  ]);
+})->middleware('auth');
