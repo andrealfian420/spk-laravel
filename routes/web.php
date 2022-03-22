@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminTourismObjectController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardProfileController;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,5 @@ Route::get('/dashboard', function () {
 
 Route::get('dashboard/profile', [DashboardProfileController::class, 'index'])->middleware('auth');
 Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'update'])->middleware('auth');
+
+Route::get('dashboard/tourism-objects', [AdminTourismObjectController::class, 'index'])->middleware('auth');
