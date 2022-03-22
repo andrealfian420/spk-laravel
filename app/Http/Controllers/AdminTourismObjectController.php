@@ -40,4 +40,40 @@ class AdminTourismObjectController extends Controller
     return redirect('/dashboard/tourism-objects')
       ->with('success', 'The new tourism object has been added!');
   }
+
+  public function edit(TourismObject $tourismObject)
+  {
+    $this->authorize('update', TourismObject::class);
+
+    return view('dashboard.tourism-object.edit', [
+      'title'  => "Edit $tourismObject->name",
+      'object' => $tourismObject
+    ]);
+  }
+
+  public function update(Request $request, TourismObject $tourismObject)
+  {
+    $this->authorize('update', TourismObject::class);
+
+    $validate = $request->validate([
+      'name'    => 'required|max:255|unique:tourism_objects,name,' . $tourismObject->id,
+      'address' => 'required|max:255|unique:tourism_objects,address,' . $tourismObject->id,
+    ]);
+
+    TourismObject::where('id', $tourismObject->id)
+      ->update($validate);
+
+    return redirect('/dashboard/tourism-objects')
+      ->with('success', 'The selected tourism object has been updated!');
+  }
+
+  public function destroy(TourismObject $tourismObject)
+  {
+    $this->authorize('delete', TourismObject::class);
+
+    TourismObject::destroy($tourismObject->id);
+
+    return redirect('/dashboard/tourism-objects')
+      ->with('success', 'The selected tourism object has been deleted!');
+  }
 }
