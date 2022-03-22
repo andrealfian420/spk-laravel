@@ -60,4 +60,14 @@ class AuthController extends Controller
     // sign in gagal
     return back()->with('failed', "Sign in failed, please try again");
   }
+
+  public function signOut(Request $request)
+  {
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/')->with('success', 'You have been logged out!');
+  }
 }
