@@ -5,10 +5,10 @@
     <h1 class="h2">Tourism Objects</h1>
   </div>
 
-  <div class="table-responsive col-lg-8">
+  <div class="table-responsive col-lg-10">
     <a href="/dashboard/tourism-objects/create" class="btn btn-primary mb-3">
       <span data-feather="plus"></span>
-      Create new Tourism Object
+      Create New Tourism Object
     </a>
 
     <table class="table table-striped">
