@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,5 @@ Route::get('/dashboard', function () {
     'title' => 'Dashboard'
   ]);
 })->middleware('auth');
+
+Route::get('dashboard/profile', [DashboardProfileController::class, 'index'])->middleware('auth');

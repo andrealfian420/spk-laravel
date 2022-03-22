@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/assets/img/favicon.ico">
-    <title>SPK Objek Wisata | {{ $title }}</title>
+    <title>{{ $title }} | SPK Objek Wisata</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
