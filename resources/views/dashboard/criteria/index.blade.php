@@ -36,7 +36,7 @@
                   @method('delete')
                   @csrf
 
-                  <span role="button" class="text-decoration-none text-danger btnDeleteCategory">
+                  <span role="button" class="text-decoration-none text-danger btnDelete" data-object="criteria">
                     <span data-feather="x-circle"></span>
                   </span>
                 </form>
