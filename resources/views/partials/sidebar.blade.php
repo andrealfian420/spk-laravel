@@ -25,14 +25,18 @@
       </h6>
 
       <ul class="nav flex-column">
-        @can('viewAny', App\Models\TourismObject::class)
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('dashboard/tourism-objects*') ? 'active' : '' }}" href="/dashboard/tourism-objects">
-              <span data-feather="camera"></span>
-              Tourism Objects
-            </a>
-          </li>
-        @endcan
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('dashboard/tourism-objects*') ? 'active' : '' }}" href="/dashboard/tourism-objects">
+            <span data-feather="camera"></span>
+            Tourism Objects
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('dashboard/criterias*') ? 'active' : '' }}" href="/dashboard/criterias">
+            <span data-feather="flag"></span>
+            Criterias
+          </a>
+        </li>
       </ul>
     @endcan
   </div>

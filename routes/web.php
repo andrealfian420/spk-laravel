@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCriteriaController;
 use App\Http\Controllers\AdminTourismObjectController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardProfileController;
@@ -33,5 +34,9 @@ Route::get('dashboard/profile', [DashboardProfileController::class, 'index'])->m
 Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'update'])->middleware('auth');
 
 Route::resource('dashboard/tourism-objects', AdminTourismObjectController::class)
+  ->except('show')
+  ->middleware('auth');
+
+Route::resource('dashboard/criterias', AdminCriteriaController::class)
   ->except('show')
   ->middleware('auth');

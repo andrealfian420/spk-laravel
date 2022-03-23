@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Models\TourismObject;
+use App\Policies\CriteriaPolicy;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\TourismObjectPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -17,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
    */
   protected $policies = [
     // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-    TourismObject::class => TourismObjectPolicy::class
+    TourismObject::class => TourismObjectPolicy::class,
+    Criteria::class => CriteriaPolicy::class
   ];
 
   /**
