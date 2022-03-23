@@ -29,7 +29,11 @@ class AdminCriteriaController extends Controller
    */
   public function create()
   {
-    //
+    $this->authorize('create', Criteria::class);
+
+    return view('dashboard.criteria.create', [
+      'title' => 'Add Criterias',
+    ]);
   }
 
   /**
@@ -40,7 +44,17 @@ class AdminCriteriaController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $this->authorize('create', Criteria::class);
+
+    $validate = $request->validate([
+      'name'      => 'required|max:30|unique:criterias',
+      'attribute' => 'required',
+    ]);
+
+    Criteria::create($validate);
+
+    return redirect('/dashboard/criterias')
+      ->with('success', 'The new criteria has been added!');
   }
 
   /**
@@ -51,7 +65,12 @@ class AdminCriteriaController extends Controller
    */
   public function edit(Criteria $criteria)
   {
-    //
+    $this->authorize('update', Criteria::class);
+
+    return view('dashboard.criteria.edit', [
+      'title'    => "Edit $criteria->name",
+      'criteria' => $criteria
+    ]);
   }
 
   /**
@@ -63,7 +82,18 @@ class AdminCriteriaController extends Controller
    */
   public function update(Request $request, Criteria $criteria)
   {
-    //
+    $this->authorize('update', Criteria::class);
+
+    $validate = $request->validate([
+      'name'      => 'required|max:30|unique:criterias,name,' . $criteria->id,
+      'attribute' => 'required',
+    ]);
+
+    Criteria::where('id', $criteria->id)
+      ->update($validate);
+
+    return redirect('/dashboard/criterias')
+      ->with('success', 'The selected criteria has been updated!');
   }
 
   /**
@@ -74,6 +104,11 @@ class AdminCriteriaController extends Controller
    */
   public function destroy(Criteria $criteria)
   {
-    //
+    $this->authorize('delete', Criteria::class);
+
+    Criteria::destroy($criteria->id);
+
+    return redirect('/dashboard/criterias')
+      ->with('success', 'The selected criteria has been deleted!');
   }
 }

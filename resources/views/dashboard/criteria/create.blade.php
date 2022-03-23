@@ -2,10 +2,10 @@
 
 @section('content')
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Create New Tourism Object</h1>
+    <h1 class="h2">Create New Criteria</h1>
   </div>
 
-  <form class="col-lg-8" method="POST" action="/dashboard/tourism-objects">
+  <form class="col-lg-8" method="POST" action="/dashboard/criterias">
     @csrf
 
     <div class="mb-3">
@@ -20,10 +20,14 @@
     </div>
 
     <div class="mb-3">
-      <label for="address" class="form-label">Address</label>
-      <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}" required>
+      <label for="attribute" class="form-label">Attribute</label>
+      <select class="form-select @error("attribute") is-invalid @enderror" id="attribute" name="attribute" required>
+        <option value="" disabled selected>Choose One</option>
+        <option value="BENEFIT" {{ old('attribute') === 'BENEFIT' ?  'selected' : '' }}>Benefit</option>
+        <option value="COST" {{ old('attribute') === 'COST' ?  'selected' : '' }}>Cost</option>
+      </select>
 
-      @error('address')
+      @error('attribute')
         <div class="invalid-feedback">
           {{ $message }}
         </div>
@@ -31,6 +35,6 @@
     </div>
 
     <button type="submit" class="btn btn-primary mb-3">Save</button>
-    <a href="/dashboard/tourism-objects" class="btn btn-danger mb-3">Cancel</a>
+    <a href="/dashboard/criterias" class="btn btn-danger mb-3">Cancel</a>
   </form>
 @endsection

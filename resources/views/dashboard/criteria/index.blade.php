@@ -27,7 +27,7 @@
               {{-- $loop->iteraion => nomor / urutan loop keberapa nya --}}
               <td class="text-center">{{ $loop->iteration }}</td>
               <td class="text-center">{{ $criteria->name }}</td>
-              <td class="text-center">{{ $criteria->attribute }}</td>
+              <td class="text-center">{{ Str::ucfirst(Str::lower($criteria->attribute)) }}</td>
               <td class="text-center">
                 <a href="/dashboard/criterias/{{ $criteria->id }}/edit" class="text-decoration-none text-success">
                   <span data-feather="edit"></span>
