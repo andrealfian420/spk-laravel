@@ -18,8 +18,8 @@ return new class extends Migration
       $table->foreignId('criteria_analysis_id')->constrained();
       $table->unsignedBigInteger('criteria_id_first');
       $table->unsignedBigInteger('criteria_id_second');
-      $table->decimal('comparison_value', 10, 9);
-      $table->decimal('comparison_result', 10, 9);
+      $table->decimal('comparison_value', 10, 9)->default(1);
+      $table->decimal('comparison_result', 10, 9)->nullable();
       $table->timestamps();
 
       $table->foreign('criteria_id_first')->references('id')->on('criterias');
