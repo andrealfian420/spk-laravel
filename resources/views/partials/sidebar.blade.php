@@ -16,6 +16,12 @@
           My Profile
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{ Request::is('dashboard/criteria-comparisons*') ? 'active' : '' }}" href="/dashboard/criteria-comparisons">
+          <span data-feather="columns"></span>
+          Criteria Comparisons
+        </a>
+      </li>
     </ul>
 
     @can('admin')
