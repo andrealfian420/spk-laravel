@@ -18,6 +18,8 @@ class DashboardProfileController extends Controller
 
   public function update(Request $request, User $user)
   {
+    $this->authorize('update', User::class);
+
     if ($user->id != auth()->user()->id) {
       abort(403);
     }

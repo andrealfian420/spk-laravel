@@ -21,7 +21,7 @@ class UserPolicy
 
   public function update(User $user)
   {
-    return $user->level === 'SUPERADMIN';
+    return ($user->level === 'SUPERADMIN' || $user->id == auth()->user()->id);
   }
 
   public function delete(User $user)
