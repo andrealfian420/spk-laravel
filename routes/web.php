@@ -37,6 +37,8 @@ Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'upda
 
 Route::get('dashboard/criteria-comparisons', [DashboardCriteriaComparisonController::class, 'index'])
   ->middleware('auth');
+Route::post('dashboard/criteria-comparisons', [DashboardCriteriaComparisonController::class, 'store'])
+  ->middleware('auth');
 
 Route::resource('dashboard/tourism-objects', AdminTourismObjectController::class)
   ->except('show')
