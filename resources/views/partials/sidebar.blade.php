@@ -37,6 +37,15 @@
             Criterias
           </a>
         </li>
+
+        @can('viewAny', App\Models\User::class)
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('dashboard/users*') ? 'active' : '' }}" href="/dashboard/users">
+            <span data-feather="users"></span>
+            User Management
+          </a>
+        </li>
+        @endcan
       </ul>
     @endcan
   </div>

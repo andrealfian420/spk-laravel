@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminCriteriaController;
 use App\Http\Controllers\AdminTourismObjectController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardProfileController;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,9 @@ Route::resource('dashboard/tourism-objects', AdminTourismObjectController::class
   ->middleware('auth');
 
 Route::resource('dashboard/criterias', AdminCriteriaController::class)
+  ->except('show')
+  ->middleware('auth');
+
+Route::resource('dashboard/users', AdminUserController::class)
   ->except('show')
   ->middleware('auth');
