@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
@@ -29,7 +30,11 @@ class AdminUserController extends Controller
    */
   public function create()
   {
-    //
+    $this->authorize('create', User::class);
+
+    return view('dashboard.user.create', [
+      'title' => 'User Management',
+    ]);
   }
 
   /**
@@ -40,7 +45,22 @@ class AdminUserController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $this->authorize('create', User::class);
+
+    $validate = $request->validate([
+      'name'     => 'required|max:255',
+      'username' => 'required|unique:users|min:6|max:15',
+      'email'    => 'required|unique:users|email:dns',
+      'password' => 'required|min:6',
+      'level'    => 'required'
+    ]);
+
+    $validate['password'] = Hash::make($validate['password']);
+
+    User::create($validate);
+
+    return redirect('/dashboard/users')
+      ->with('success', 'The new user has been added!');
   }
 
   /**
@@ -51,7 +71,12 @@ class AdminUserController extends Controller
    */
   public function edit(User $user)
   {
-    //
+    $this->authorize('update', User::class);
+
+    return view('dashboard.user.edit', [
+      'title' => 'User Management',
+      'user'  => $user
+    ]);
   }
 
   /**
@@ -63,7 +88,30 @@ class AdminUserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    //
+    $this->authorize('update', User::class);
+
+    $rules = [
+      'name'     => 'required|max:255',
+      'username' => 'required|min:6|max:15|unique:users,username,' . $user->id,
+      'email'    => 'required|email:dns|unique:users,email,' . $user->id,
+      'level'    => 'required'
+    ];
+
+    if ($request->password) {
+      $rules['password'] = 'min:6';
+    }
+
+    $validate = $request->validate($rules);
+
+    if ($validate['password'] ?? false) {
+      $validate['password'] = Hash::make($validate['password']);
+    }
+
+    User::where('id', $user->id)
+      ->update($validate);
+
+    return redirect('/dashboard/users')
+      ->with('success', 'The selected user has been updated!');
   }
 
   /**
@@ -74,6 +122,11 @@ class AdminUserController extends Controller
    */
   public function destroy(User $user)
   {
-    //
+    $this->authorize('delete', User::class);
+
+    User::destroy($user->id);
+
+    return redirect('/dashboard/users')
+      ->with('success', 'The selected user has been deleted!');
   }
 }
