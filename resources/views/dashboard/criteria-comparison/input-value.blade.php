@@ -28,6 +28,7 @@
             @method('put')
             @csrf
 
+            <input type="hidden" name="id" value="{{ $details[0]->criteria_analysis_id }}">
             @foreach ($details as $detail)
               <tr>
                 <input type="hidden" name="criteria_analysis_detail_id[]" value="{{ $detail->id }}">
