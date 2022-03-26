@@ -43,14 +43,14 @@
               <td class="text-center">{{ $comparison->user->name }}</td>
               <td class="text-center">{{ $comparison->created_at->toFormattedDateString() }}</td>
               <td class="text-center">
-                <a href="/dashboard/users/{{ $comparison->id }}/edit" class="badge bg-success text-decoration-none">
+                <a href="/dashboard/criteria-comparisons/{{ $comparison->id }}" class="badge bg-success text-decoration-none">
                   See Comparison Values
                 </a>
-                <form action="/dashboard/users/{{ $comparison->id }}" method="POST" class="d-inline">
+                <form action="/dashboard/criteria-comparisons/{{ $comparison->id }}" method="POST" class="d-inline">
                   @method('delete')
                   @csrf
 
-                  <span role="button" class="badge bg-danger btnDelete" data-object="user">
+                  <span role="button" class="badge bg-danger btnDelete" data-object="Comparison Data">
                     Delete
                   </span>
                 </form>

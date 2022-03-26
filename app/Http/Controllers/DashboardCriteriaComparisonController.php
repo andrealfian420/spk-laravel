@@ -100,7 +100,36 @@ class DashboardCriteriaComparisonController extends Controller
       CriteriaAnalysisDetail::create($detail);
     }
 
-    return redirect('/dashboard/criteria-comparisons')
+    return redirect('/dashboard/criteria-comparisons/' . $analysisId)
       ->with('success', 'The chosen criteria has been added!');
+  }
+
+  public function show(CriteriaAnalysis $criteriaAnalysis)
+  {
+    $criteriaAnalysis->load('details', 'details.firstCriteria', 'details.secondCriteria');
+
+    $details = filterDetailResults($criteriaAnalysis->details);
+
+    return view('dashboard.criteria-comparison.input-value', [
+      'title'   => 'Input Criteria Comparison Values',
+      'details' => $details,
+    ]);
+  }
+
+  public function updateValue(Request $request)
+  {
+    $validate = $request->validate([
+      'criteria_analysis_detail_id' => 'required|array',
+      'comparison_values'           => 'required|array'
+    ]);
+
+    foreach ($validate['criteria_analysis_detail_id'] as $key => $id) {
+      CriteriaAnalysisDetail::where('id', $id)
+        ->update(['comparison_value' => $validate['comparison_values'][$key]]);
+    }
+
+    return redirect()
+      ->back()
+      ->with('success', 'The comparison values has been updated!');
   }
 }

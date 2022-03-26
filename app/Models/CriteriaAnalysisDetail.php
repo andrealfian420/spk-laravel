@@ -16,4 +16,14 @@ class CriteriaAnalysisDetail extends Model
     'comparison_value',
     'comparison_result'
   ];
+
+  public function firstCriteria()
+  {
+    return $this->belongsTo(Criteria::class, 'criteria_id_first', 'id');
+  }
+
+  public function secondCriteria()
+  {
+    return $this->belongsTo(Criteria::class, 'criteria_id_second', 'id');
+  }
 }
