@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAlternativeController;
 use App\Http\Controllers\AdminCriteriaController;
 use App\Http\Controllers\AdminTourismObjectController;
 use App\Http\Controllers\AdminUserController;
@@ -19,43 +20,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
-Route::get('/signup', [AuthController::class, 'signUp'])->middleware('guest');
-Route::post('/signup', [AuthController::class, 'store'])->middleware('guest');
+Route::middleware('guest')->group(function () {
+  Route::get('/', [AuthController::class, 'index'])->name('login');
+  Route::post('/', [AuthController::class, 'authenticate']);
+  Route::get('/signup', [AuthController::class, 'signUp']);
+  Route::post('/signup', [AuthController::class, 'store']);
+});
 
-Route::post('/signout', [AuthController::class, 'signOut'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+  Route::post('/signout', [AuthController::class, 'signOut']);
 
-Route::get('/dashboard', function () {
-  return view('dashboard.index', [
-    'title' => 'Dashboard'
-  ]);
-})->middleware('auth');
+  Route::get('/dashboard', function () {
+    return view('dashboard.index', [
+      'title' => 'Dashboard'
+    ]);
+  });
 
-Route::get('dashboard/profile', [DashboardProfileController::class, 'index'])->middleware('auth');
-Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'update'])->middleware('auth');
+  Route::get('dashboard/profile', [DashboardProfileController::class, 'index']);
+  Route::put('dashboard/profile/{user}', [DashboardProfileController::class, 'update']);
 
-Route::get('dashboard/criteria-comparisons', [DashboardCriteriaComparisonController::class, 'index'])
-  ->middleware('auth');
-Route::post('dashboard/criteria-comparisons', [DashboardCriteriaComparisonController::class, 'store'])
-  ->middleware('auth');
+  Route::get('dashboard/criteria-comparisons', [DashboardCriteriaComparisonController::class, 'index']);
+  Route::post('dashboard/criteria-comparisons', [DashboardCriteriaComparisonController::class, 'store']);
 
-Route::get('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'show'])
-  ->middleware('auth');
-Route::put('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'updateValue'])
-  ->middleware('auth');
+  Route::get('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'show']);
 
-Route::get('dashboard/criteria-comparisons/result/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'result'])
-  ->middleware('auth');
+  Route::put('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'updateValue']);
 
-Route::resource('dashboard/tourism-objects', AdminTourismObjectController::class)
-  ->except('show')
-  ->middleware('auth');
+  Route::get('dashboard/criteria-comparisons/result/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'result']);
 
-Route::resource('dashboard/criterias', AdminCriteriaController::class)
-  ->except('show')
-  ->middleware('auth');
-
-Route::resource('dashboard/users', AdminUserController::class)
-  ->except('show')
-  ->middleware('auth');
+  Route::resources([
+    'dashboard/tourism-objects' => AdminTourismObjectController::class,
+    'dashboard/criterias'       => AdminCriteriaController::class,
+    'dashboard/users'           => AdminUserController::class,
+    'dashboard/alternatives'    => AdminAlternativeController::class
+  ], ['except' => 'show']);
+});

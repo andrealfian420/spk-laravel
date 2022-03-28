@@ -43,6 +43,12 @@
             Criterias
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('dashboard/alternatives*') ? 'active' : '' }}" href="/dashboard/alternatives">
+            <span data-feather="briefcase"></span>
+            Alternatives
+          </a>
+        </li>
 
         @can('viewAny', App\Models\User::class)
         <li class="nav-item">

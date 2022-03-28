@@ -10,4 +10,9 @@ class TourismObject extends Model
     'name',
     'address',
   ];
+
+  public function alternatives()
+  {
+    return $this->hasMany(Alternative::class);
+  }
 }
