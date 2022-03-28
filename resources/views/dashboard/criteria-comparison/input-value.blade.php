@@ -6,11 +6,18 @@
   </div>
 
   <div class="table-responsive col-lg-12">
-    <div class="d-lg-flex justify-content-end">
+    <div class="d-lg-flex justify-content-end gap-2">
       <a href="/dashboard/criteria-comparisons" class="btn btn-secondary mb-3">
         <span data-feather="arrow-left"></span>
-        Back to comparisons data
+        Back To Comparisons Data
       </a>
+
+      @if ($isDoneCounting)
+      <a href="/dashboard/criteria-comparisons/result/{{ $criteria_analysis->id }}" class="btn btn-success mb-3 ml-4">
+        <span data-feather="clipboard"></span>
+        See Comparison Result
+      </a>
+      @endif
     </div>
 
     <table class="table table-striped">
@@ -73,11 +80,13 @@
                 </td>
               </tr>
             @endforeach
+            @can('update', $criteria_analysis)
               <tr>
                 <td class="text-center">
                   <button type="submit" class="btn btn-primary">Save</button>
                 </td>
               </tr>
+            @endcan
           </form>
         @endif
       </tbody>

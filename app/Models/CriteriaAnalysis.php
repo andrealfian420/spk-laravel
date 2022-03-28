@@ -20,4 +20,9 @@ class CriteriaAnalysis extends Model
   {
     return $this->hasMany(CriteriaAnalysisDetail::class);
   }
+
+  public function preventiveValues()
+  {
+    return $this->hasMany(PreventiveValue::class);
+  }
 }

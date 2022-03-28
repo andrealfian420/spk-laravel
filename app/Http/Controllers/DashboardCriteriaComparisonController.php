@@ -107,18 +107,28 @@ class DashboardCriteriaComparisonController extends Controller
 
   public function show(CriteriaAnalysis $criteriaAnalysis)
   {
+    $this->authorize('view', $criteriaAnalysis);
+
     $criteriaAnalysis->load('details', 'details.firstCriteria', 'details.secondCriteria');
 
-    $details = filterDetailResults($criteriaAnalysis->details);
+    $details        = filterDetailResults($criteriaAnalysis->details);
+    $isDoneCounting = PreventiveValue::where('criteria_analysis_id', $criteriaAnalysis->id)
+      ->exists();
+
+    $criteriaAnalysis->unsetRelation('details');
 
     return view('dashboard.criteria-comparison.input-value', [
-      'title'   => 'Input Criteria Comparison Values',
-      'details' => $details,
+      'title'             => 'Input Criteria Comparison Values',
+      'criteria_analysis' => $criteriaAnalysis,
+      'details'           => $details,
+      'isDoneCounting'    => $isDoneCounting,
     ]);
   }
 
-  public function updateValue(Request $request)
+  public function updateValue(Request $request, CriteriaAnalysis $criteriaAnalysis)
   {
+    $this->authorize('update', $criteriaAnalysis);
+
     $validate = $request->validate([
       'id'                          => 'required|exists:criteria_analyses',
       'criteria_analysis_detail_id' => 'required|array',
@@ -219,5 +229,61 @@ class DashboardCriteriaComparisonController extends Controller
         'criteria_id'          => $criteria->id,
       ], $data);
     }
+  }
+
+  public function result(CriteriaAnalysis $criteriaAnalysis)
+  {
+    $this->authorize('view', $criteriaAnalysis);
+
+    $criteriaAnalysis->load('details', 'details.firstCriteria', 'details.secondCriteria', 'preventiveValues', 'preventiveValues.criteria');
+
+    $totalPerCriteria =  $this->_getTotalSumPerCriteria($criteriaAnalysis->id, CriteriaAnalysisDetail::getSelectedCriterias($criteriaAnalysis->id));
+
+    $ruleRI = [
+      1  => 0.0,
+      2  => 0.0,
+      3  => 0.58,
+      4  => 0.90,
+      5  => 1.12,
+      6  => 1.24,
+      7  => 1.32,
+      8  => 1.41,
+      9  => 1.45,
+      10 => 1.49,
+      11 => 1.51,
+      12 => 1.48,
+      13 => 1.56,
+      14 => 1.57,
+      15 => 1.59,
+    ];
+
+    return view('dashboard.criteria-comparison.result', [
+      'title'             => 'Comparison Results',
+      'criteria_analysis' => $criteriaAnalysis,
+      'totalSums'         => $totalPerCriteria,
+      'ruleRI'            => $ruleRI
+    ]);
+  }
+
+  private function _getTotalSumPerCriteria($criteriaAnalysisId, $criterias)
+  {
+    $result = [];
+
+    foreach ($criterias as $criteria) {
+      $totalPerCriteria = CriteriaAnalysisDetail::where([
+        'criteria_analysis_id' => $criteriaAnalysisId,
+        'criteria_id_second'   => $criteria->id
+      ])
+        ->sum('comparison_result');
+
+      $data = [
+        'name'     => $criteria->name,
+        'totalSum' => floatval($totalPerCriteria)
+      ];
+
+      array_push($result, $data);
+    }
+
+    return $result;
   }
 }

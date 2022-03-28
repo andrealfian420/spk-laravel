@@ -45,6 +45,9 @@ Route::get('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCrite
 Route::put('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'updateValue'])
   ->middleware('auth');
 
+Route::get('dashboard/criteria-comparisons/result/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'result'])
+  ->middleware('auth');
+
 Route::resource('dashboard/tourism-objects', AdminTourismObjectController::class)
   ->except('show')
   ->middleware('auth');
