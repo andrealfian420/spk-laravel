@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\CriteriaAnalysis;
 use App\Models\User;
 use App\Models\TourismObject;
+use App\Policies\CriteriaAnalysisPolicy;
 use App\Policies\CriteriaPolicy;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\TourismObjectPolicy;
@@ -18,10 +20,10 @@ class AuthServiceProvider extends ServiceProvider
    * @var array<class-string, class-string>
    */
   protected $policies = [
-    // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     TourismObject::class => TourismObjectPolicy::class,
     Criteria::class => CriteriaPolicy::class,
-    User::class => UserPolicy::class
+    User::class => UserPolicy::class,
+    CriteriaAnalysis::class => CriteriaAnalysisPolicy::class
   ];
 
   /**
