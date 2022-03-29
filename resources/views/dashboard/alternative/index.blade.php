@@ -1,6 +1,20 @@
 @extends('layouts.main')
 
 @section('content')
+  <style>
+    .badge:hover {
+      color: #fff !important;
+      text-decoration: none;
+    }
+
+    .bg-success:hover {
+      background: #2f9164 !important;
+    }
+
+    .bg-danger:hover {
+      background: #e84a59 !important;
+    }
+  </style>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Alternatives</h1>
   </div>
@@ -44,9 +58,9 @@
                 @endforeach
 
                 <td class="text-center">
-                  <span class="badge bg-success btn-editAlternatif" style="cursor: pointer;" data-toggle="modal">
+                  <a href="/dashboard/alternatives/{{ $alternative->id }}/edit" class="badge bg-success text-decoration-none">
                     Edit
-                  </span>
+                  </a>
 
                   <form action="/dashboard/alternatives/{{ $alternative->id }}" method="post" class="d-inline">
                     @method('delete')

@@ -11,13 +11,13 @@ class Alternative extends Model
 
   protected $guarded = ['id'];
 
-  public function tourismObject()
-  {
-    return $this->belongsTo(TourismObject::class, 'tourism_object_id');
-  }
-
   public function getKeyName()
   {
     return 'tourism_object_id';
+  }
+
+  public function criteria()
+  {
+    return $this->belongsTo(Criteria::class, 'criteria_id');
   }
 }
