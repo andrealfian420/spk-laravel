@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardCriteriaComparisonController;
 use App\Http\Controllers\DashboardProfileController;
+use App\Http\Controllers\DashboardRankController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
   Route::put('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'updateValue']);
 
   Route::get('dashboard/criteria-comparisons/result/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'result']);
+
+  Route::get('dashboard/final-ranking', [DashboardRankController::class, 'index']);
 
   Route::resources([
     'dashboard/tourism-objects' => AdminTourismObjectController::class,

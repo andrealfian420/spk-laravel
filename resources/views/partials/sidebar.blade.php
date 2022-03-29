@@ -22,6 +22,12 @@
           Criteria Comparisons
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{ Request::is('dashboard/final-ranking*') ? 'active' : '' }}" href="/dashboard/final-ranking">
+          <span data-feather="award"></span>
+          Final Rank
+        </a>
+      </li>
     </ul>
 
     @can('admin')
