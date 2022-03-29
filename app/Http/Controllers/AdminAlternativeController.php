@@ -68,6 +68,12 @@ class AdminAlternativeController extends Controller
 
   public function destroy(Alternative $alternative)
   {
-    //
+    $this->authorize('admin');
+
+    Alternative::where('tourism_object_id', $alternative->tourism_object_id)
+      ->delete();
+
+    return redirect('/dashboard/alternatives')
+      ->with('success', 'The selected alternative has been deleted!');
   }
 }

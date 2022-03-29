@@ -15,4 +15,9 @@ class Alternative extends Model
   {
     return $this->belongsTo(TourismObject::class, 'tourism_object_id');
   }
+
+  public function getKeyName()
+  {
+    return 'tourism_object_id';
+  }
 }
