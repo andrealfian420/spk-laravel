@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\CriteriaAnalysis;
 use App\Models\CriteriaAnalysisDetail;
@@ -257,11 +258,14 @@ class DashboardCriteriaComparisonController extends Controller
       15 => 1.59,
     ];
 
+    $isAnyAlternative = Alternative::all();
+
     return view('dashboard.criteria-comparison.result', [
       'title'             => 'Comparison Results',
       'criteria_analysis' => $criteriaAnalysis,
       'totalSums'         => $totalPerCriteria,
-      'ruleRI'            => $ruleRI
+      'ruleRI'            => $ruleRI,
+      'isAbleToRank'      => $isAnyAlternative->count() ? true : false,
     ]);
   }
 

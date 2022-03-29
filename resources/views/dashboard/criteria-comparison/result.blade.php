@@ -231,6 +231,11 @@
                     <button type="submit" class="btn btn-danger">Reinput Comparison Values</button>
                   </form>
                 </td>
+              @elseif(!$isAbleToRank)
+              <td class="text-center text-danger" colspan="2">
+                The admin has not yet to input any alternative yet <br>
+                Please wait for admin to input the alternatives before viewing the rank
+              </td>
               @else
                 <th scope="row">Action</th>
                 <td>
