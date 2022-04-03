@@ -290,4 +290,14 @@ class DashboardCriteriaComparisonController extends Controller
 
     return $result;
   }
+
+  public function destroy(CriteriaAnalysis $criteriaAnalysis)
+  {
+    $this->authorize('delete', $criteriaAnalysis);
+
+    CriteriaAnalysis::destroy($criteriaAnalysis->id);
+
+    return redirect('/dashboard/criteria-comparisons')
+      ->with('success', 'The selected criteria comparison has been deleted!');
+  }
 }

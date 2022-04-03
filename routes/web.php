@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
   Route::put('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'updateValue']);
 
+  Route::delete('dashboard/criteria-comparisons/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'destroy']);
+
   Route::get('dashboard/criteria-comparisons/result/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'result']);
 
   Route::get('dashboard/final-ranking', [DashboardRankController::class, 'index']);
