@@ -15,8 +15,8 @@ return new class extends Migration
   {
     Schema::create('alternatives', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('criteria_id')->constrained();
-      $table->foreignId('tourism_object_id')->constrained();
+      $table->foreignId('criteria_id')->constrained()->cascadeOnDelete();
+      $table->foreignId('tourism_object_id')->constrained()->cascadeOnDelete();
       $table->decimal('alternative_value', 10, 1);
       $table->timestamps();
     });

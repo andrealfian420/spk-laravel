@@ -15,8 +15,8 @@ return new class extends Migration
   {
     Schema::create('preventive_values', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('criteria_analysis_id')->constrained();
-      $table->foreignId('criteria_id')->constrained();
+      $table->foreignId('criteria_analysis_id')->constrained()->cascadeOnDelete();
+      $table->foreignId('criteria_id')->constrained()->cascadeOnDelete();
       $table->decimal('value', 10, 9);
       $table->timestamps();
     });
