@@ -152,7 +152,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Add Alternative</button>
+            <button type="{{ $criterias->count() ? "submit" : "button" }}" class="btn btn-primary">Add Alternative</button>
           </div>
         </form>
       </div>
