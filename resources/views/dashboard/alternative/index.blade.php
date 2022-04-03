@@ -53,8 +53,16 @@
                 <td class="text-center">
                   {{ $alternative->name }}
                 </td>
-                @foreach ($alternative->alternatives as $value)
-                  <td class="text-center">{{ floatval($value->alternative_value) }}</td>
+                @foreach ($criterias as $key => $value)
+                  @if (isset($alternative->alternatives[$key]))
+                    <td class="text-center">
+                      {{ floatval($alternative->alternatives[$key]->alternative_value) }}
+                    </td>
+                  @else
+                    <td class="text-center">
+                      Empty
+                    </td>
+                  @endif
                 @endforeach
 
                 <td class="text-center">
