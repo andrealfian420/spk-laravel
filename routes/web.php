@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
   Route::get('dashboard/criteria-comparisons/result/{criteria_analysis}', [DashboardCriteriaComparisonController::class, 'result']);
 
   Route::get('dashboard/final-ranking', [DashboardRankController::class, 'index']);
+  Route::get('dashboard/final-ranking/{criteria_analysis}', [DashboardRankController::class, 'show']);
 
   Route::resources([
     'dashboard/tourism-objects' => AdminTourismObjectController::class,

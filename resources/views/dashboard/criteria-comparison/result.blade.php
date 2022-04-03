@@ -239,7 +239,7 @@
               @else
                 <th scope="row">Action</th>
                 <td>
-                  <a href="/final-ranking/{{ $criteria_analysis->id }}" class="btn btn-success">
+                  <a href="/dashboard/final-ranking/{{ $criteria_analysis->id }}" class="btn btn-success">
                     See Tourism Ranking
                   </a>
                 </td>

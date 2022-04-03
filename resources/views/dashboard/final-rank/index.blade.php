@@ -34,7 +34,6 @@
         @if ($criteria_analyses->count())
           @foreach ($criteria_analyses as $analysis)
             <tr>
-              {{-- $loop->iteraion => nomor / urutan loop keberapa nya --}}
               <td class="text-center">{{ $loop->iteration }}</td>
               <td class="text-center">{{ $analysis->user->name }}</td>
               <td class="text-center">{{ $analysis->created_at->toFormattedDateString() }}</td>
