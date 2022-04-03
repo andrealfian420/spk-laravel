@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use App\Models\Alternative;
 use Illuminate\Http\Request;
 use App\Models\CriteriaAnalysis;
@@ -21,12 +22,18 @@ class DashboardRankController extends Controller
       $criteriaAnalyses = CriteriaAnalysis::with('user')->get();
     }
 
-    $isAnyAlternative = Alternative::all();
+    $availableCriterias = Criteria::all()->pluck('id');
+    $isAnyAlternative   = Alternative::checkAlternativeByCriterias($availableCriterias);
+    $isAbleToRank       = false;
+
+    if ($isAnyAlternative) {
+      $isAbleToRank = true;
+    }
 
     return view('dashboard.final-rank.index', [
       'title'             => 'Final Ranking',
       'criteria_analyses' => $criteriaAnalyses,
-      'isAbleToRank'      => $isAnyAlternative->count() ? true : false,
+      'isAbleToRank'      => $isAbleToRank,
     ]);
   }
 

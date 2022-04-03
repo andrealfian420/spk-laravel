@@ -258,14 +258,20 @@ class DashboardCriteriaComparisonController extends Controller
       15 => 1.59,
     ];
 
-    $isAnyAlternative = Alternative::all();
+    $availableCriterias = Criteria::all()->pluck('id');
+    $isAnyAlternative   = Alternative::checkAlternativeByCriterias($availableCriterias);
+    $isAbleToRank       = false;
+
+    if ($isAnyAlternative) {
+      $isAbleToRank = true;
+    }
 
     return view('dashboard.criteria-comparison.result', [
       'title'             => 'Comparison Results',
       'criteria_analysis' => $criteriaAnalysis,
       'totalSums'         => $totalPerCriteria,
       'ruleRI'            => $ruleRI,
-      'isAbleToRank'      => $isAnyAlternative->count() ? true : false,
+      'isAbleToRank'      => $isAbleToRank,
     ]);
   }
 

@@ -86,4 +86,22 @@ class Alternative extends Model
 
     return $finalRes;
   }
+
+  public static function checkAlternativeByCriterias($criterias)
+  {
+    $isAllCriteriaPresent = false;
+
+    foreach ($criterias as $criteria) {
+      $check = static::where('criteria_id', $criteria)->get()->count();
+
+      if ($check > 0) {
+        $isAllCriteriaPresent = true;
+      } else {
+        $isAllCriteriaPresent = false;
+        break;
+      }
+    }
+
+    return $isAllCriteriaPresent;
+  }
 }
