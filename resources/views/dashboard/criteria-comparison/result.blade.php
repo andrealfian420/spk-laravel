@@ -211,7 +211,7 @@
               <th scope="row">Consistency Ratio</th>
               @php($CR = $CI / $RI)
               @php($txtClass = 'text-danger fw-bold')
-              @if ($CI <= 0.1)
+              @if ($CR <= 0.1)
                 @php($txtClass = 'text-success fw-bold')
               @endif
               <td class="{{ $txtClass }}">
@@ -223,13 +223,7 @@
                 <td class="text-center text-danger" colspan="2">
                   The value of Consistency Ratio exceeds <b>0.1</b> <br>
                   Please input the criteria comparison values again
-                  <form action="/criteria-comparisons/reinput" method="post" class="mt-2">
-                    <input type="hidden" name="criteria_analysis_id" value="{{ $criteria_analysis->id }}">
-                    @foreach ($criteria_analysis->preventiveValues as $preventiveValue)
-                      <input type="hidden" name="criteria_ids[]" value="{{ $preventiveValue->criteria->id }}">
-                    @endforeach
-                    <button type="submit" class="btn btn-danger">Reinput Comparison Values</button>
-                  </form>
+                  <a href="/dashboard/criteria-comparisons/{{ $criteria_analysis->id }}" class="btn btn-danger mt-2">Reinput Comparison Values</a>
                 </td>
               @elseif(!$isAbleToRank)
               <td class="text-center text-danger" colspan="2">
