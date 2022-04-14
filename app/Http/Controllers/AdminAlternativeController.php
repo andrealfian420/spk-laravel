@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Alternative\AlternativeStoreRequest;
+use App\Http\Requests\Alternative\AlternativeUpdateRequest;
 use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\TourismObject;
@@ -34,13 +36,9 @@ class AdminAlternativeController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function store(AlternativeStoreRequest $request)
   {
-    $validate = $request->validate([
-      'tourism_object_id' => 'required|exists:tourism_objects,id',
-      'criteria_id'       => 'required|array',
-      'alternative_value' => 'required|array'
-    ]);
+    $validate = $request->validated();
 
     foreach ($validate['criteria_id'] as $key => $criteriaId) {
       $data = [
@@ -74,22 +72,11 @@ class AdminAlternativeController extends Controller
     ]);
   }
 
-  public function update(Request $request, Alternative $alternative)
+  public function update(AlternativeUpdateRequest $request, Alternative $alternative)
   {
     $this->authorize('admin');
-    $rules = [
-      'criteria_id'       => 'required|array',
-      'alternative_id'    => 'required|array',
-      'alternative_value' => 'required|array',
-    ];
 
-    if ($request->new_tourism_object_id) {
-      $rules['new_tourism_object_id'] = 'required|exists:tourism_objects,id';
-      $rules['new_criteria_id']       = 'required|array';
-      $rules['new_alternative_value'] = 'required|array';
-    }
-
-    $validate = $request->validate($rules);
+    $validate = $request->validated();
 
     // insert new alternative values if the new criteria exists
     if ($validate['new_tourism_object_id'] ?? false) {
