@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\AuthSignInRequest;
+use App\Http\Requests\Auth\AuthSignUpRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,14 +29,9 @@ class AuthController extends Controller
     return view('auth.signup', $data);
   }
 
-  public function store(Request $request)
+  public function store(AuthSignUpRequest $request)
   {
-    $validate = $request->validate([
-      'name' => 'required|max:255',
-      'username' => 'required|unique:users|min:6|max:15',
-      'email' => 'required|unique:users|email:dns',
-      'password' => 'required|min:6'
-    ]);
+    $validate = $request->validated();
 
     $validate['password'] = Hash::make($validate['password']);
 
@@ -43,12 +40,9 @@ class AuthController extends Controller
     return redirect('/')->with('success', 'Your account has been created!');
   }
 
-  public function authenticate(Request $request)
+  public function authenticate(AuthSignInRequest $request)
   {
-    $credentials = $request->validate([
-      'username' => "required",
-      'password' => "required",
-    ]);
+    $credentials = $request->validated();
 
     // autentikasi user
     if (Auth::attempt($credentials)) {
