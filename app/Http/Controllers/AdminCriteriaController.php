@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Criteria\CriteriaStoreRequest;
+use App\Http\Requests\Criteria\CriteriaUpdateRequest;
 use App\Models\Criteria;
 use Illuminate\Http\Request;
 
@@ -42,14 +44,11 @@ class AdminCriteriaController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(CriteriaStoreRequest $request)
   {
     $this->authorize('create', Criteria::class);
 
-    $validate = $request->validate([
-      'name'      => 'required|max:30|unique:criterias',
-      'attribute' => 'required',
-    ]);
+    $validate = $request->validated();
 
     Criteria::create($validate);
 
@@ -80,14 +79,11 @@ class AdminCriteriaController extends Controller
    * @param  \App\Models\Criteria  $criteria
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Criteria $criteria)
+  public function update(CriteriaUpdateRequest $request, Criteria $criteria)
   {
     $this->authorize('update', Criteria::class);
 
-    $validate = $request->validate([
-      'name'      => 'required|max:30|unique:criterias,name,' . $criteria->id,
-      'attribute' => 'required',
-    ]);
+    $validate = $request->validated();
 
     Criteria::where('id', $criteria->id)
       ->update($validate);
