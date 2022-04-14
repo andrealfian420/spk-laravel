@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Profile\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,28 +17,11 @@ class DashboardProfileController extends Controller
     ]);
   }
 
-  public function update(Request $request, User $user)
+  public function update(ProfileUpdateRequest $request, User $user)
   {
-    $this->authorize('update', User::class);
+    $this->authorize('update', $user);
 
-    if ($user->id != auth()->user()->id) {
-      abort(403);
-    }
-
-    $rules = [
-      'name' => 'required|max:255',
-      'username' => 'required|min:6|max:15|unique:users,username,' . $user->id,
-      'email' => 'required|email:dns|unique:users,email,' . $user->id,
-    ];
-
-    if ($request->oldPassword || $request->password || $request->password_confirmation) {
-      $rules = [
-        'oldPassword' => 'required',
-        'password'    => 'required|confirmed|min:6',
-      ];
-    }
-
-    $validate = $request->validate($rules);
+    $validate = $request->validated();
 
     if ($validate['oldPassword'] ?? false) {
       //check password
