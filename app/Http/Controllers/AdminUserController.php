@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\AdminUserStoreRequest;
+use App\Http\Requests\User\AdminUserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -43,17 +45,11 @@ class AdminUserController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(AdminUserStoreRequest $request)
   {
     $this->authorize('create', User::class);
 
-    $validate = $request->validate([
-      'name'     => 'required|max:255',
-      'username' => 'required|unique:users|min:6|max:15',
-      'email'    => 'required|unique:users|email:dns',
-      'password' => 'required|min:6',
-      'level'    => 'required'
-    ]);
+    $validate = $request->validated();
 
     $validate['password'] = Hash::make($validate['password']);
 
@@ -86,22 +82,11 @@ class AdminUserController extends Controller
    * @param  \App\Models\User  $user
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, User $user)
+  public function update(AdminUserUpdateRequest $request, User $user)
   {
     $this->authorize('update', User::class);
 
-    $rules = [
-      'name'     => 'required|max:255',
-      'username' => 'required|min:6|max:15|unique:users,username,' . $user->id,
-      'email'    => 'required|email:dns|unique:users,email,' . $user->id,
-      'level'    => 'required'
-    ];
-
-    if ($request->password) {
-      $rules['password'] = 'min:6';
-    }
-
-    $validate = $request->validate($rules);
+    $validate = $request->validated();
 
     if ($validate['password'] ?? false) {
       $validate['password'] = Hash::make($validate['password']);
