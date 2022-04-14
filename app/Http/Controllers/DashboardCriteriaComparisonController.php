@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CriteriaComparison\UpdateValueRequest;
 use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\CriteriaAnalysis;
@@ -126,15 +127,11 @@ class DashboardCriteriaComparisonController extends Controller
     ]);
   }
 
-  public function updateValue(Request $request, CriteriaAnalysis $criteriaAnalysis)
+  public function updateValue(UpdateValueRequest $request, CriteriaAnalysis $criteriaAnalysis)
   {
     $this->authorize('update', $criteriaAnalysis);
 
-    $validate = $request->validate([
-      'id'                          => 'required|exists:criteria_analyses',
-      'criteria_analysis_detail_id' => 'required|array',
-      'comparison_values'           => 'required|array'
-    ]);
+    $validate = $request->validated();
 
     foreach ($validate['criteria_analysis_detail_id'] as $key => $id) {
       CriteriaAnalysisDetail::where('id', $id)
