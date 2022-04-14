@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TourismObject\TourismObjectStoreRequest;
+use App\Http\Requests\TourismObject\TourismObjectUpdateRequest;
 use App\Models\TourismObject;
 use Illuminate\Http\Request;
 
@@ -26,14 +28,11 @@ class AdminTourismObjectController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function store(TourismObjectStoreRequest $request)
   {
     $this->authorize('create', TourismObject::class);
 
-    $validate = $request->validate([
-      'name'    => 'required|unique:tourism_objects|max:255',
-      'address' => 'required|unique:tourism_objects|max:255',
-    ]);
+    $validate = $request->validated();
 
     TourismObject::create($validate);
 
@@ -51,14 +50,11 @@ class AdminTourismObjectController extends Controller
     ]);
   }
 
-  public function update(Request $request, TourismObject $tourismObject)
+  public function update(TourismObjectUpdateRequest $request, TourismObject $tourismObject)
   {
     $this->authorize('update', TourismObject::class);
 
-    $validate = $request->validate([
-      'name'    => 'required|max:255|unique:tourism_objects,name,' . $tourismObject->id,
-      'address' => 'required|max:255|unique:tourism_objects,address,' . $tourismObject->id,
-    ]);
+    $validate = $request->validated();
 
     TourismObject::where('id', $tourismObject->id)
       ->update($validate);
