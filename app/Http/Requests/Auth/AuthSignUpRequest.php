@@ -24,10 +24,11 @@ class AuthSignUpRequest extends FormRequest
   public function rules()
   {
     return [
-      'name'     => 'required|max:255',
-      'username' => 'required|unique:users|min:6|max:15',
-      'email'    => 'required|unique:users|email:dns',
-      'password' => 'required|min:6'
+      'name'                 => 'required|max:255',
+      'username'             => 'required|unique:users|min:6|max:15',
+      'email'                => 'required|unique:users|email:dns',
+      'password'             => 'required|min:6',
+      'g-recaptcha-response' => 'required|captcha'
     ];
   }
 }

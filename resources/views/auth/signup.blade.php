@@ -49,6 +49,17 @@
         @enderror
       </div>
 
+      <div class="my-2">
+        {!! NoCaptcha::renderJs() !!}
+        {!! NoCaptcha::display() !!}
+
+        @error('g-recaptcha-response')
+          <span class="help-block text-danger">
+            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+          </span>
+        @enderror
+      </div>
+
       <div class="mb-2 @error('password') mt-4 @enderror">
         Already have an account? 
         <a href="/" class="text-decoration-none">Sign In</a>
